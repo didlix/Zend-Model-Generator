@@ -69,7 +69,7 @@ foreach($tables AS $table) {
     $file = new Zend_CodeGenerator_Php_File(array(
         'classes' => array(
             new Zend_CodeGenerator_Php_Class(array(
-                'name'    => 'Default_Model_DbTable_' . $table,
+                'name'    => 'Default_Model_' . mb_convert_case($table,MB_CASE_TITLE),
                 'properties' => array(
                     array(
                         'name'          => '_name',
@@ -77,12 +77,23 @@ foreach($tables AS $table) {
                         'defaultValue'  => $table
                         )
                 ),
+                'extendedClass'   => 'Zend_Db_Table_Abstract'
 
             )),
         )
     ));
 
-    // or write it to a file:
-    file_put_contents(APPLICATION_PATH . '/models/DbTable/' . $table . '.php', $file->generate());
+    $table = mb_convert_case($table,MB_CASE_TITLE);
+
+    if(!file_exists(APPLICATION_PATH . '/models/' . $table . '.php')) {
+
+       // or write it to a file:
+        if(file_put_contents(APPLICATION_PATH . '/models/' . $table . '.php', $file->generate())) {
+            echo "[CREATED] File " .'models/' . $table . '.php' . "\r\n";
+        }
+
+    } else {
+        echo "[SKIPPED] File " .'models/' . $table . '.php exists' . "\r\n";
+    }
 
 }
