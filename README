@@ -1,0 +1,3 @@
+Download to your Zend Framework application/scripts directory
+It will use the details in your config file to generate db tables on the fly.
+Use at your own risk, this is supplied without any kind of warranty, support or spell checker.
