@@ -69,7 +69,7 @@ foreach($tables AS $table) {
     $file = new Zend_CodeGenerator_Php_File(array(
         'classes' => array(
             new Zend_CodeGenerator_Php_Class(array(
-                'name'    => 'Default_Model_' . mb_convert_case($table,MB_CASE_TITLE),
+                'name'    => 'Default_Model_' . str_replace('_','',mb_convert_case($table,MB_CASE_TITLE)),
                 'properties' => array(
                     array(
                         'name'          => '_name',
@@ -83,7 +83,7 @@ foreach($tables AS $table) {
         )
     ));
 
-    $table = mb_convert_case($table,MB_CASE_TITLE);
+    $table = str_replace('_','',mb_convert_case($table,MB_CASE_TITLE));
 
     if(!file_exists(APPLICATION_PATH . '/models/' . $table . '.php')) {
 
